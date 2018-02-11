@@ -1,14 +1,21 @@
 from __future__ import print_function
-from checkBioRxivRSS import check_RSS
 from logging_utils import logger
+from argparser_utils import get_argument
+
 import access_sqlite3
-import checkAltmetrics
+from checkBioRxivRSS import check_RSS
+from checkAltmetrics import check_altmetrics
+from sendSlackMessage import send_slack_message
 
 
 def main():
+    # Get setting file
+    setting_dict = get_argument()
+    logger(__name__).info(setting_dict)
+
     # Parse RSS feed
     logger(__name__).info("Start Parsing RSS feed...")
-    RSS_data_list = check_RSS("genomics", "bioinformatics")
+    RSS_data_list = check_RSS(setting_dict['rss_categories'])
 
     # Create sqlite3 database if not exists
     sqlite3_file = "../db/storeAltmetrics.sqlite3"
@@ -27,7 +34,7 @@ def main():
 
     # Get altmetric score for each article
     for doi_info in target_doi_list:
-        altmetrics_data = checkAltmetrics.checkAltmetrics(doi_info.doi)
+        altmetrics_data = check_altmetrics(doi_info.doi)
         if altmetrics_data == None:
             continue
 
@@ -36,7 +43,17 @@ def main():
             sqlite3_file, doi_info.doi, altmetrics_data)
 
         # Send a message to SNS
-        return
+        if altmetrics_data.flg == 0:
+            logger(__name__).info("Send a message to slack.")
+            message = """{0}\n{1}\n""".format(doi_info.title, doi_info.url)
+            send_slack_message(
+                setting_dict['slack_token'],
+                setting_dict['slack_channel'],
+                message)
+            return
+
+    logger(__name__).info(
+        "Successfully finished.")
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ from logging_utils import logger
 from time import sleep
 
 
-def checkAltmetrics(doi):
+def check_altmetrics(doi):
     try:
         # Get altmetric score
         sleep(1)    # Escaping hammer altmetric server

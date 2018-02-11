@@ -1,5 +1,4 @@
 import sqlite3
-from contextlib import closing
 from logging_utils import logger
 
 
@@ -10,7 +9,7 @@ def create_tables(sqlite3_file):
     :return: Boolean
     """
     try:
-        with closing(sqlite3.connect(sqlite3_file)) as conn:
+        with sqlite3.connect(sqlite3_file) as conn:
             c = conn.cursor()
 
             # Create biorxiv_altmetrics_log table
@@ -42,7 +41,7 @@ def insert_new_doi(sqlite3_file, RSS_data_list):
     :return: boolean
     """
     try:
-        with closing(sqlite3.connect(sqlite3_file)) as conn:
+        with sqlite3.connect(sqlite3_file) as conn:
             c = conn.cursor()
 
             # Insert article info into biorxiv_altmetrics_log if not already exists
@@ -67,7 +66,7 @@ def select_target_doi(sqlite3_file):
     :return: target doi list
     """
     try:
-        with closing(sqlite3.connect(sqlite3_file)) as conn:
+        with sqlite3.connect(sqlite3_file) as conn:
             c = conn.cursor()
 
             # Select target doi from biorxiv_altmetrics_log
@@ -95,7 +94,7 @@ def insert_altmetric_score(sqlite3_file, doi, altmetrics_data):
     :return: boolean
     """
     try:
-        with closing(sqlite3.connect(sqlite3_file)) as conn:
+        with sqlite3.connect(sqlite3_file) as conn:
             c = conn.cursor()
 
             # insert altmetric score into biorxiv_altmetrics_log

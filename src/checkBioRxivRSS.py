@@ -3,10 +3,10 @@ import feedparser
 from logging_utils import logger
 
 
-def check_RSS(*subjects):
+def check_RSS(subjects):
     """
     Check the RSS feed of BioRxiv
-    :param subjects: comma-separated subject categories
+    :param subjects: subject categories
     :return: RSS data list
     """
     # Get & Parse RSS

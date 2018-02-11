@@ -108,3 +108,6 @@ ENV/
 
 # log files
 log_*.txt
+
+# yaml file
+production.yaml
