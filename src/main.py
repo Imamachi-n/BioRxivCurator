@@ -46,7 +46,6 @@ def main():
 
         # Send a message to SNS
         if altmetrics_data.flg == 1:
-            logger(__name__).info("Send a message to slack.")
             message = """{0}\n{1}\n""".format(doi_info.title, doi_info.url)
             send_slack_message(
                 setting_dict['slack_token'],
