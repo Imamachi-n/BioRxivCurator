@@ -1,15 +1,15 @@
 #!/bin/bash
-curl -sSL https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -o /tmp/miniconda.sh
-bash /tmp/miniconda.sh -bfp /usr/local
-rm -rf /tmp/miniconda.sh
+sudo curl -sSL https://repo.continuum.io/miniconda/Miniconda-3.16.0-Linux-armv7l.sh -o /tmp/miniconda.sh
+bash /tmp/miniconda.sh -bfp /home/pi/miniconda3
+sudo rm -rf /tmp/miniconda.sh
+echo 'export PATH="/home/pi/miniconda3/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 conda install -y python=2
 conda update conda
-conda config --add channels r
-conda config --add channels defaults
-conda config --add channels conda-forge
-conda config --add channels bioconda
-conda install feedparser
-conda install sqlite3
-conda install pyyaml
-conda install slackclient
-conda install tweepy
+pip install feedparser
+pip install pyyaml
+pip install slackclient
+pip install tweepy
+
+# Install sqlite3 client app
+sudo apt-get install sqlitebrowser
