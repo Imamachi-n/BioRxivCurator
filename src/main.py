@@ -34,23 +34,24 @@ def main():
 
     # Get altmetric score for each article
     for doi_info in target_doi_list:
+        logger(__name__).info("Get altmetric score for " + doi_info.doi)
         altmetrics_data = check_altmetrics(doi_info.doi)
         if altmetrics_data == None:
             continue
 
         # Insert scores into sqlite3 db
+        logger(__name__).info("Insert scores into sqlite3 db.")
         access_sqlite3.insert_altmetric_score(
             sqlite3_file, doi_info.doi, altmetrics_data)
 
         # Send a message to SNS
-        if altmetrics_data.flg == 0:
+        if altmetrics_data.flg == 1:
             logger(__name__).info("Send a message to slack.")
             message = """{0}\n{1}\n""".format(doi_info.title, doi_info.url)
             send_slack_message(
                 setting_dict['slack_token'],
                 setting_dict['slack_channel'],
                 message)
-            return
 
     logger(__name__).info(
         "Successfully finished.")
