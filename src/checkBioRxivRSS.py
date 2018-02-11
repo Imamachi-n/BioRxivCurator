@@ -30,6 +30,6 @@ def check_RSS(*subjects):
 class RSS_data(object):
     def __init__(self, doi, title, url, date):
         self.doi = doi
-        self.url = url
         self.title = title
+        self.url = url
         self.date = date

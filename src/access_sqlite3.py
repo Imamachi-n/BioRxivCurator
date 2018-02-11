@@ -25,13 +25,6 @@ def create_tables(sqlite3_file):
                      PRIMARY KEY(doi)
                     )"""
             c.execute(sql)
-
-            # Create doi_biorxiv_wk
-            sql = """CREATE TABLE IF NOT EXISTS doi_biorxiv_wk
-                    (doi TEXT, 
-                     PRIMARY KEY(doi)
-                    )"""
-            c.execute(sql)
             conn.commit()
 
         return True
@@ -52,29 +45,10 @@ def insert_new_doi(sqlite3_file, RSS_data_list):
         with closing(sqlite3.connect(sqlite3_file)) as conn:
             c = conn.cursor()
 
-            # Check altmetric flg if not 1
-            target_doi_list = []
-            for doi in [tuple([p.doi, p.doi]) for p in RSS_data_list]:
-                sql = """SELECT * FROM doi_biorxiv_wk 
-                         WHERE doi = ? 
-                         AND NOT EXISTS (SELECT * FROM biorxiv_altmetrics_log 
-                                          WHERE doi = ? and altmetric_flg = 1)"""
-                c.execute(sql, doi)
-
-                # Target article if not already scored high altmetric score
-                if len(c.fetchall()) > 0:
-                    target_doi_list.append(str(doi[0]))
-
-            # Insert doi into doi_biorxiv_wk table if not exists
-            doi_list_for_sql = [tuple([doi]) for doi in target_doi_list]
-            logger(__name__).debug(doi_list_for_sql)
-            sql = "INSERT OR IGNORE INTO doi_biorxiv_wk(doi) VALUES(?)"
-            c.executemany(sql, doi_list_for_sql)
-
-            # Insert article info into biorxiv_altmetrics_log
+            # Insert article info into biorxiv_altmetrics_log if not already exists
             sql = """INSERT OR IGNORE INTO biorxiv_altmetrics_log
                      VALUES(?,?,?,?,?,?,?)"""
-            doi_info = [tuple([p.doi, p.url, p.title, p.date, 0, 0, 0])
+            doi_info = [tuple([p.doi, p.title, p.url, p.date, 0, 0, 0])
                         for p in RSS_data_list]
             c.executemany(sql, doi_info)
             conn.commit()
@@ -88,7 +62,7 @@ def insert_new_doi(sqlite3_file, RSS_data_list):
 
 def select_target_doi(sqlite3_file):
     """
-    try to select target doi from doi_biorxiv_wk.
+    try to select target doi from biorxiv_altmetrics_log.
     :param sqlite3_file: sqlite3 database file
     :return: target doi list
     """
@@ -96,12 +70,18 @@ def select_target_doi(sqlite3_file):
         with closing(sqlite3.connect(sqlite3_file)) as conn:
             c = conn.cursor()
 
-            # Select target doi from doi_biorxiv_wk
-            sql = """SELECT doi from doi_biorxiv_wk"""
+            # Select target doi from biorxiv_altmetrics_log
+            sql = """SELECT doi, title, link from biorxiv_altmetrics_log
+                     WHERE altmetric_flg = 0"""
             c.execute(sql)
-            target_doi = [doi_tuple[0] for doi_tuple in c.fetchall()]
 
-        return target_doi
+            # Store doi data as target_doi_data object
+            target_doi_list = []
+            for doi_info in c.fetchall():
+                target_doi_list.append(target_doi_data(
+                    doi=doi_info[0], title=doi_info[1], url=doi_info[2]))
+
+        return target_doi_list
 
     except sqlite3.Error as e:
         logger(__name__).error(e)
@@ -134,3 +114,10 @@ def insert_altmetric_score(sqlite3_file, doi, altmetrics_data):
     except sqlite3.Error as e:
         logger(__name__).error(e)
         return False
+
+
+class target_doi_data(object):
+    def __init__(self, doi, title, url):
+        self.doi = doi
+        self.title = title
+        self.url = url

@@ -1,14 +1,19 @@
 from __future__ import print_function
 import altmetric_utils
 from logging_utils import logger
+from time import sleep
 
 
 def checkAltmetrics(doi):
     try:
+        # Get altmetric score
+        sleep(1)    # Escaping hammer altmetric server
         altmetric_api = altmetric_utils.Altmetric()
         response = altmetric_api.doi(doi)
+
         if response:
             logger(__name__).info("Get altmetrics score for " + doi)
+            # Check altmetric score (pct: >=90)
             if response["context"]['journal']['pct'] >= 90:
                 flg = 1
             else:
