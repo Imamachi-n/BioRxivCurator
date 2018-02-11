@@ -1,3 +1,7 @@
+rss_categories: ['genomics', 'bioinformatics']
 slack_token: 'xxxxxxxx'
 slack_channel: '@xxxxxxx'
-rss_categories: ['genomics', 'bioinformatics']
+twitter_consumer_key: xxxxxxxx
+twitter_consumer_secret: xxxxxxxx
+twitter_access_token: xxxxxxxx
+twitter_access_token_secret: xxxxxxxx

@@ -2,12 +2,14 @@ from __future__ import print_function
 import altmetric_utils
 from logging_utils import logger
 from time import sleep
+from datetime import datetime
 
 
-def check_altmetrics(doi):
+def check_altmetrics(doi_info):
     try:
         # Get altmetric score
         sleep(1)    # Escaping hammer altmetric server
+        doi = doi_info.doi
         altmetric_api = altmetric_utils.Altmetric()
         response = altmetric_api.doi(doi)
 
@@ -18,6 +20,14 @@ def check_altmetrics(doi):
                 flg = 1
             else:
                 flg = 0
+
+            # Check elasped date
+            date = str(doi_info.date).split("-")
+            updated_date = datetime(int(date[0]), int(date[1]), int(date[2]))
+            elasped_date = (datetime.now() - updated_date).days
+            if elasped_date > 30:
+                flg = -1
+
             return altmetrics_data(altmetric_score=response["score"],
                                    pct=response["context"]['journal']['pct'],
                                    flg=flg)

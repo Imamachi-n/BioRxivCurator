@@ -70,7 +70,7 @@ def select_target_doi(sqlite3_file):
             c = conn.cursor()
 
             # Select target doi from biorxiv_altmetrics_log
-            sql = """SELECT doi, title, link from biorxiv_altmetrics_log
+            sql = """SELECT doi, title, link, update_date from biorxiv_altmetrics_log
                      WHERE altmetric_flg = 0"""
             c.execute(sql)
 
@@ -78,7 +78,7 @@ def select_target_doi(sqlite3_file):
             target_doi_list = []
             for doi_info in c.fetchall():
                 target_doi_list.append(target_doi_data(
-                    doi=doi_info[0], title=doi_info[1], url=doi_info[2]))
+                    doi=doi_info[0], title=doi_info[1], url=doi_info[2], date=doi_info[3]))
 
         return target_doi_list
 
@@ -116,7 +116,8 @@ def insert_altmetric_score(sqlite3_file, doi, altmetrics_data):
 
 
 class target_doi_data(object):
-    def __init__(self, doi, title, url):
+    def __init__(self, doi, title, url, date):
         self.doi = doi
         self.title = title
         self.url = url
+        self.date = date

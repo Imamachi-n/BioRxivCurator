@@ -6,6 +6,7 @@ import access_sqlite3
 from checkBioRxivRSS import check_RSS
 from checkAltmetrics import check_altmetrics
 from sendSlackMessage import send_slack_message
+from sendTwitterMessage import send_twitter_message
 
 
 def main():
@@ -35,7 +36,7 @@ def main():
     # Get altmetric score for each article
     for doi_info in target_doi_list:
         logger(__name__).info("Get altmetric score for " + doi_info.doi)
-        altmetrics_data = check_altmetrics(doi_info.doi)
+        altmetrics_data = check_altmetrics(doi_info)
         if altmetrics_data == None:
             continue
 
@@ -52,8 +53,15 @@ def main():
                 setting_dict['slack_channel'],
                 message)
 
-    logger(__name__).info(
-        "Successfully finished.")
+            # Tweet message
+            send_twitter_message(
+                setting_dict['twitter_consumer_key'],
+                setting_dict['twitter_consumer_secret'],
+                setting_dict['twitter_access_token'],
+                setting_dict['twitter_access_token_secret'],
+                message)
+
+    logger(__name__).info("Successfully finished.")
 
 
 if __name__ == '__main__':
