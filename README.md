@@ -1,6 +1,13 @@
 # BioRxivCurator
 
-BioRxiv article curation batch scripts using Altmetric score.
+BioRxiv article curation batch scripts using Altmetrics data.  
+Altmetrics data is provided by Altmetric.com, a research metrics company who track and collect the online conversations around millions of scholarly outputs.
+Further information about how the Altmetric Attention Score is calculated is available [here](https://www.altmetric.com/about-altmetrics/the-donut-and-score/).
+
+## Sample Twitter bot
+
+The following twitter account is a sample bot for tweeting curated BioRxiv articles using Altmetrics data.  
+https://twitter.com/BioRxivCurator
 
 ## Requirements and Installation
 
@@ -36,7 +43,10 @@ $ sudo apt-get install sqlitebrowser
 ## Preparation of slack and twitter access token
 
 `./src/production.yaml` are needed to run BioRxivCurator.
-The values of slack_token, slack_channel, twitter_consumer_key, twitter_consumer_secret, twitter_access_token and twitter_access_token_secret is replaced with yours.
+rss_categories is set to several categories. Check adaptive categories for BioRxiv RSS feed.  
+https://www.biorxiv.org/alertsrss
+
+The values of slack_token, slack_channel, twitter_consumer_key, twitter_consumer_secret, twitter_access_token and twitter_access_token_secret are replaced with yours.
 
 ```
 rss_categories: ['genomics', 'bioinformatics']
