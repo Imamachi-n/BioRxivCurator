@@ -42,7 +42,7 @@ $ sudo apt-get install sqlitebrowser
 
 ## Preparation of slack and twitter access token
 
-`./src/production.yaml` are needed to run BioRxivCurator.
+`./src/production.yaml` are needed to run BioRxivCurator.  
 rss_categories is set to several categories. Check adaptive categories for BioRxiv RSS feed.  
 https://www.biorxiv.org/alertsrss
 
