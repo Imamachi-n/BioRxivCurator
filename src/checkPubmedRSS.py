@@ -6,8 +6,8 @@ from datetime import datetime
 from time import sleep
 
 
-# https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1HYeX0emtvYhH08GonWthus8pY_vnptXA6shLd_r8lqDl-XQHp
-# ((((((("Nature biotechnology"[Journal]) OR "Nature methods"[Journal]) OR "Nature genetics"[Journal]) OR "Molecular cell"[Journal]) OR "eLife"[Journal]) OR "PLoS biology"[Journal]) OR "Genome research"[Journal]) OR "Nature cell biology"[Journal]
+# https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1ROYcHRjBNrxpwoceMUwxUyyF6uHjjPfuA44ekGfuKxDQTKIQE
+# (((((((("Nature biotechnology"[Journal]) OR "Nature methods"[Journal]) OR "Nature genetics"[Journal]) OR "Molecular cell"[Journal]) OR "eLife"[Journal]) OR "PLoS biology"[Journal]) OR "Genome research"[Journal]) OR "Genes & development"[Journal]) OR "Nature cell biology"[Journal]
 def check_RSS(url):
     """
     Check the RSS feed of PubMed.
@@ -18,6 +18,7 @@ def check_RSS(url):
     - eLife
     - PLoS biology
     - Genome research
+    - Genes & development
     - Nature cell biology
 
     :param subjects: subject categories
@@ -37,7 +38,7 @@ def check_RSS(url):
             rss_data_list.append(
                 RSS_data(doi=doi,
                          title=pub["title"],
-                         url=link,
+                         url="https://doi.org/{0}".format(doi),
                          date=datetime.now().strftime("%Y-%m-%d")))
             sleep(0.5)
     return rss_data_list

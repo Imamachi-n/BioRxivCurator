@@ -16,7 +16,9 @@ def main():
 
     # Parse RSS feed
     logger(__name__).info("Start Parsing RSS feed...")
-    RSS_data_list = check_RSS(setting_dict['pubmed_rss_link'])
+    RSS_data_list = []
+    for link in setting_dict['pubmed_rss_link'].values():
+        RSS_data_list.extend(check_RSS(link))
 
     # Create sqlite3 database if not exists
     sqlite3_file = "../db/storeAltmetrics4PubMed.sqlite3"

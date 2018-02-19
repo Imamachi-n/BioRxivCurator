@@ -1,5 +1,13 @@
 rss_categories: ['genomics', 'bioinformatics']
-pubmed_rss_link: 'https://XXXXXXXXX'
+pubmed_rss_link:
+  nature_communications: 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1VSjW0JqT_vUo3cx35p0JWrF-tg9pTvR_cXhuez1oIpZtSX9y1'
+  nature_biotechnology: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1N5mTdq-XQ44UN5eRYLyumWS-YatO6PiWd4YMZN_9xSIi7DQpO
+  nature_methods: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1loZZVJsOLJ-gJdcPOEy3dMRCwYVwe8Ddp5bzKnwIX-ZEjLEjc
+  nature_genetics: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1LmeR7JfcIZ8ekn37Saorp-EvwSleIgr-kuPrH5u_qvUf7_54b
+  molecular_cell: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=18ervbTh5APRvfjolw6T8mvS9kKue9zImyx16MWRfKe1t-HABw
+  elife: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1J9m0S5PiOKnPlEQbwldXX7FyOKGNPzWaxHS3P13W6BUPLH1Ya
+  genome_research: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1Jau6enPigEWTTCNUZHwEQVsdJQTOhhfBVTFz--6RM6BvBk5J0
+  genes_and_development: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=1FSk0ACuTgzTVKNDrRt684lNVMdL43mTkuWkT0YqSwWU1v5kzC
 slack_token: 'xxxxxxxx'
 slack_channel: '@xxxxxxx'
 twitter_consumer_key: xxxxxxxx
