@@ -1,7 +1,12 @@
 rss_categories: ['genomics', 'bioinformatics']
+pubmed_rss_link: 'https://XXXXXXXXX'
 slack_token: 'xxxxxxxx'
 slack_channel: '@xxxxxxx'
 twitter_consumer_key: xxxxxxxx
 twitter_consumer_secret: xxxxxxxx
 twitter_access_token: xxxxxxxx
 twitter_access_token_secret: xxxxxxxx
+twitter_consumer_key_pubmed: xxxxxxxx
+twitter_consumer_secret_pubmed: xxxxxxxx
+twitter_access_token_pubmed: xxxxxxxx
+twitter_access_token_secret_pubmed: xxxxxxxx
