@@ -49,19 +49,23 @@ def main():
 
         # Send a message to SNS
         if altmetrics_data.flg == 1:
-            message = """{0}\n{1}\n""".format(doi_info.title, doi_info.url)
-            send_slack_message(
-                setting_dict['slack_token'],
-                setting_dict['slack_channel'],
-                message)
+            try:
+                message = """{0}\n{1}\n""".format(doi_info.title, doi_info.url)
+                send_slack_message(
+                    setting_dict['slack_token'],
+                    setting_dict['slack_channel'],
+                    message)
 
-            # Tweet message
-            send_twitter_message(
-                setting_dict['twitter_consumer_key_pubmed'],
-                setting_dict['twitter_consumer_secret_pubmed'],
-                setting_dict['twitter_access_token_pubmed'],
-                setting_dict['twitter_access_token_secret_pubmed'],
-                message)
+                # Tweet message
+                send_twitter_message(
+                    setting_dict['twitter_consumer_key_pubmed'],
+                    setting_dict['twitter_consumer_secret_pubmed'],
+                    setting_dict['twitter_access_token_pubmed'],
+                    setting_dict['twitter_access_token_secret_pubmed'],
+                    message)
+            except:
+                logger(__name__).error(
+                "Fail to send a message to SNS " + doi_info.doi)
 
     logger(__name__).info("Successfully finished.")
 
