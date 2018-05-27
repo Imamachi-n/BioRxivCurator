@@ -21,8 +21,13 @@ def check_altmetrics(doi_info):
                     flg = 1
                 else:
                     flg = 0
+
+                pct = response["context"]['journal']['pct']
             except KeyError:
                 flg = 0
+                pct = 0
+                logger(__name__).error(
+                "Fail to getting PCT for " + doi)
 
             # Check elasped date
             date = str(doi_info.date).split("-")
@@ -31,8 +36,15 @@ def check_altmetrics(doi_info):
             if elasped_date > 30:
                 flg = -1
 
-            return altmetrics_data(altmetric_score=response["score"],
-                                   pct=response["context"]['journal']['pct'],
+            try:
+                altmetric_score = response["score"]
+            except:
+                altmetric_score = 0
+                logger(__name__).error(
+                "Fail to getting altmetrics score for " + doi)
+
+            return altmetrics_data(altmetric_score=altmetric_score,
+                                   pct=pct,
                                    flg=flg)
         else:
             logger(__name__).error(
