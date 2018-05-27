@@ -16,9 +16,12 @@ def check_altmetrics(doi_info):
         if response:
             logger(__name__).info("Get altmetrics score for " + doi)
             # Check altmetric score (pct: >=90)
-            if response["context"]['journal']['pct'] >= 90:
-                flg = 1
-            else:
+            try:
+                if response["context"]['journal']['pct'] >= 90:
+                    flg = 1
+                else:
+                    flg = 0
+            except KeyError:
                 flg = 0
 
             # Check elasped date
