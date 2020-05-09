@@ -1,3 +1,17 @@
+"biorxivWatch" is a python-based tool for filtering biorxiv RSS feed and sending notification to SNS (Twitter, slack). 
+Filtering based on...
+- Altmetric score
+- field (biorxiv-based)
+- Keywords
+- Authors
+
+Developing/testing environment: 
+- Python3.7 on Win10
+- slack app
+
+
+From the original repository (BiorxivCurator, https://github.com/Imamachi-n/BioRxivCurator)
+-----------------------------------------------------------------------------------------
 # BioRxivCurator
 
 BioRxiv article curation batch scripts using Altmetrics data.  
@@ -65,3 +79,5 @@ Run BioRxivCurator following the main script.
 ```
 $ python ./src/startup.sh
 ```
+
+-----------------------------------------------------------------------------------------
